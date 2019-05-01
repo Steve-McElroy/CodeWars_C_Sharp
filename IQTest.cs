@@ -11,35 +11,73 @@ using System;
 using System.Linq;
 
 public class IQ
+{ 
+    public static int Test(string numbers)
     {
-        
-        
-        public static int Test(string numbers)
-        { 
-            int oddPoint = 0;
-            
-            Console.WriteLine("Odd Point set to 0");
+        int oddPoint = 0;
+        int oddTally = 0;
+        int evenTally = 0;
 
-            //Take each value in the string and add it to an array
-            string[] splitNumbersAsString = numbers.Split(" ");
-            Console.WriteLine(splitNumbersAsString);
+        Console.WriteLine("The numbers in this sequence: " + numbers);
+        Console.WriteLine("Odd Point has been reset to: " + oddPoint);
 
-            // Convert each item in the array into an integer
-            int[] splitNumbers = Array.ConvertAll(splitNumbersAsString, int.Parse);
-            Console.WriteLine(splitNumbers);
+        //Take each value in the string and add it to an array
+        string[] splitNumbersAsString = numbers.Split(" ");
 
-            foreach (int i in splitNumbers)
+        // Convert each item in the array into an integer
+        int[] splitNumbers = Array.ConvertAll(splitNumbersAsString, int.Parse);
+
+        // Find out if the list is majority EVEN or majority ODD before deciding which 
+        foreach (int i in splitNumbers)
+        {
+            if (i % 2 != 0)
+            {
+                oddTally ++;
+            }
+
+            else
+            {
+                evenTally ++;
+            }
+        }
+
+        Console.WriteLine("Even: {0}, Odd: {1}", evenTally, oddTally);
+
+        // Majority EVEN
+        if (evenTally > oddTally)
+        {
+            Console.WriteLine("Handling a list which has a majority of even numbers");
+
+            foreach (int j in splitNumbers)
             {
                 oddPoint ++;
-                Console.WriteLine("'i' is currently: {0}. Index is currently: {1}", i, oddPoint);
-                if (i % 2 != 0)
+                Console.WriteLine("Current number: {0}. Current index: {1}", j, oddPoint);
+
+                if (j % 2 != 0)
                 {
-                    Console.WriteLine("Found an odd number, '{0}' at position {1} of the array.", i, oddPoint);
+                    Console.WriteLine("Found an odd number, '{0}' at position {1} of the array.", j, oddPoint);
                     break;
                 }
-
             }
-            return oddPoint;
-             
         }
+
+        // Majority ODD
+        else if (oddTally > evenTally)
+        {
+            Console.WriteLine("Handling a list which has a majority of odd numbers");
+
+            foreach (int k in splitNumbers)
+            {
+                oddPoint ++;
+                Console.WriteLine("Current number: {0}. Current index: {1}", k, oddPoint);
+
+                if (k % 2 != 1)
+                {
+                    Console.WriteLine("Found an even number, '{0}' at position {1} of the array.", k, oddPoint);
+                    break;
+                }
+            }
+        }
+        return oddPoint;
     }
+}
